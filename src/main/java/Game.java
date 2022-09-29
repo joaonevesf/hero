@@ -1,5 +1,7 @@
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextCharacter;
+import com.googlecode.lanterna.input.KeyStroke;
+import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
@@ -9,34 +11,44 @@ import java.io.IOException;
 
 public class Game {
     private Screen screen;
+    private int x = 10;
+    private int y = 10;
     public Game() {
         try {
             TerminalSize terminalSize = new TerminalSize(40, 20);
             DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory().setInitialTerminalSize(terminalSize);
             Terminal terminal = terminalFactory.createTerminal();
-            Screen screen = new TerminalScreen(terminal);
-            screen.setCursorPosition(null); // we don't need a cursor
-            screen.startScreen(); // screens must be started
-            screen.doResizeIfNecessary(); // resize screen if necessary
+            this.screen = new TerminalScreen(terminal);
+            this.screen.setCursorPosition(null); // we don't need a cursor
+            this.screen.startScreen(); // screens must be started
+            this.screen.doResizeIfNecessary(); // resize screen if necessary
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
     private void draw() throws IOException {
-        screen.clear();
-        screen.setCharacter(10, 10, TextCharacter.fromCharacter('X')
-                [0]);
-        screen.refresh();
+        this.screen.clear();
+        this.screen.setCharacter(x, y, TextCharacter.fromCharacter('X')[0]);
+        this.screen.refresh();
     }
+
+    private void processKey(KeyStroke key) {
+        switch (key.getKeyType()) {
+            case ArrowUp : y += 1;
+            case ArrowDown: y -= 1;
+            case ArrowRight: x += 1;
+            case ArrowLeft: x -= 1;
+            }
+    }
+
     public void run() throws IOException {
         draw();
-    }
-    public void main(String[] args) {
-        Game game = new Game();
-        try {
-            run();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        while(true) {
+            KeyStroke key = screen.readInput();
+            processKey(key);
         }
     }
+
+
 }
