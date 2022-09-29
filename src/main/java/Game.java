@@ -9,6 +9,8 @@ import com.googlecode.lanterna.terminal.Terminal;
 
 import java.io.IOException;
 
+import static com.googlecode.lanterna.input.KeyType.*;
+
 public class Game {
     private Screen screen;
     private int x = 10;
@@ -35,18 +37,26 @@ public class Game {
 
     private void processKey(KeyStroke key) {
         switch (key.getKeyType()) {
-            case ArrowUp : y += 1;
-            case ArrowDown: y -= 1;
-            case ArrowRight: x += 1;
-            case ArrowLeft: x -= 1;
-            }
+            case ArrowUp -> y -= 1;
+            case ArrowDown -> y += 1;
+            case ArrowRight -> x += 1;
+            case ArrowLeft -> x -= 1;
+        }
     }
 
     public void run() throws IOException {
-        draw();
         while(true) {
+            draw();
             KeyStroke key = screen.readInput();
-            processKey(key);
+            if (key.getKeyType() == Character && key.getCharacter() == 'q') {
+                screen.close();
+            }
+            else if (key.getKeyType() == KeyType.EOF) {
+                break;
+            }
+            else
+                processKey(key);
+
         }
     }
 
