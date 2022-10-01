@@ -12,10 +12,10 @@ import static com.googlecode.lanterna.input.KeyType.*;
 
 public class Game {
     private Screen screen;
-    private Hero hero;
+    private Arena arena;
     public Game() {
         try {
-            this.hero = new Hero(10,10);
+            this.arena = new Arena(40, 20);
             TerminalSize terminalSize = new TerminalSize(40, 20);
             DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory().setInitialTerminalSize(terminalSize);
             Terminal terminal = terminalFactory.createTerminal();
@@ -30,21 +30,12 @@ public class Game {
 
     private void draw() throws IOException {
         this.screen.clear();
-        hero.draw(screen);
+        arena.draw(screen);
         this.screen.refresh();
     }
 
-    private void moveHero(Position position) {
-        hero.setPosition(position);
-    }
-
     private void processKey(KeyStroke key) {
-        switch (key.getKeyType()) {
-            case ArrowUp -> moveHero(hero.moveUp());
-            case ArrowDown -> moveHero(hero.moveDown());
-            case ArrowRight -> moveHero(hero.moveRight());
-            case ArrowLeft -> moveHero(hero.moveLeft());
-        }
+        arena.processKey(key);
     }
 
     public void run() throws IOException {
@@ -57,9 +48,9 @@ public class Game {
             else if (key.getKeyType() == KeyType.EOF) {
                 break;
             }
-            else
+            else {
                 processKey(key);
-
+            }
         }
     }
 }
