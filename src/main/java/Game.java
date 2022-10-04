@@ -51,6 +51,9 @@ public class Game {
             else {
                 processKey(key);
             }
+            if (arena.verifyMonsterCollisions()) {
+                screen.close();
+            }
         }
     }
 }
