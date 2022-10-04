@@ -183,4 +183,17 @@ public class Arena {
         }
         return true;
     }
+
+    public boolean isWin() {
+        int counter = 0;
+        for (Coin coin : coins) {
+            if (coin.isCollected()) {
+                counter++;
+            }
+        }
+        if (counter == coins.size()) {
+            return true;
+        }
+        return false;
+    }
 }

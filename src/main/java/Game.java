@@ -52,6 +52,11 @@ public class Game {
                 processKey(key);
             }
             if (arena.verifyMonsterCollisions()) {
+                System.out.println("You're dead!");
+                screen.close();
+            }
+            else if (arena.isWin()) {
+                System.out.println("Congratulations!\nYou Win!");
                 screen.close();
             }
         }

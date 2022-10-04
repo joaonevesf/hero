@@ -24,5 +24,9 @@ public class Coin extends Element {
         collected = true;
     }
 
+    public boolean isCollected() {
+        return collected;
+    }
+
 
 }
