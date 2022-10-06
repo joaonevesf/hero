@@ -133,9 +133,8 @@ public class Arena {
 
     public void moveMonsters() {
         Random random = new Random();
-        Random random2 = new Random();
-        int isSmart = random.nextInt(3);
-        int direction = random.nextInt(3);
+        int isSmart = random.nextInt(2);
+        int direction = random.nextInt(4);
         for (Monster monster : monsters) {
             switch (isSmart) {
                 case 0:
