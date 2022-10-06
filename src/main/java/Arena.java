@@ -133,40 +133,47 @@ public class Arena {
 
     public void moveMonsters() {
         Random random = new Random();
+        Random random2 = new Random();
+        int isSmart = random.nextInt(3);
         int direction = random.nextInt(3);
         for (Monster monster : monsters) {
-            switch (direction) {
+            switch (isSmart) {
                 case 0:
-                    if (canMove(monster.moveUp())) {
-                        monster.setPosition(monster.moveUp());
-                    }
-                    else {
-                        monster.setPosition(monster.moveDown());
+                    if(canMove(monster.follow(hero.getPosition()))) {
+                        monster.setPosition((monster.follow(hero.getPosition())));
                     }
                     break;
-                case 1:
-                    if (canMove(monster.moveDown())) {
-                        monster.setPosition(monster.moveDown());
-                    }
-                    else {
-                        monster.setPosition(monster.moveUp());
-                    }
-                    break;
-                case 2:
-                    if (canMove(monster.moveLeft())) {
-                        monster.setPosition(monster.moveLeft());
-                    }
-                    else {
-                        monster.setPosition(monster.moveRight());
-                    }
-                    break;
-                case 3:
-                    if (canMove(monster.moveRight())) {
-                        monster.setPosition(monster.moveRight());
-                    }
-                    else {
-                        monster.setPosition(monster.moveLeft());
-                    }
+                default:
+                    switch (direction) {
+                    case 0:
+                        if (canMove(monster.moveUp())) {
+                            monster.setPosition(monster.moveUp());
+                        } else {
+                            monster.setPosition(monster.moveDown());
+                        }
+                        break;
+                    case 1:
+                        if (canMove(monster.moveDown())) {
+                            monster.setPosition(monster.moveDown());
+                        } else {
+                            monster.setPosition(monster.moveUp());
+                        }
+                        break;
+                    case 2:
+                        if (canMove(monster.moveLeft())) {
+                            monster.setPosition(monster.moveLeft());
+                        } else {
+                            monster.setPosition(monster.moveRight());
+                        }
+                        break;
+                    case 3:
+                        if (canMove(monster.moveRight())) {
+                            monster.setPosition(monster.moveRight());
+                        } else {
+                            monster.setPosition(monster.moveLeft());
+                        }
+                        break;
+                }
                     break;
             }
         }

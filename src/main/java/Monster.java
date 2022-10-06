@@ -31,4 +31,19 @@ public class Monster extends Element {
         graphics.putString(new TerminalPosition(position.getX(), position.getY()), "M");
     }
 
+    public Position follow(Position position) {
+        if (position.getX() < getPosition().getX()) {
+            return moveLeft();
+        }
+        else if ((position.getX() > getPosition().getX())) {
+            return moveRight();
+        }
+        else if ((position.getY() < getPosition().getY())) {
+            return moveUp();
+        }
+        else {
+            return moveDown();
+        }
+    }
+
 }
